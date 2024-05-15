@@ -1,7 +1,7 @@
 import { PlayIcon } from "lucide-react";
 import { useForm } from "react-hook-form";
-import { zodResolver } from '@hookform/resolvers/zod'
-import * as zod from 'zod'
+import { zodResolver } from "@hookform/resolvers/zod";
+import * as zod from "zod";
 
 import {
   CountdownContainer,
@@ -14,20 +14,31 @@ import {
 } from "./styles";
 
 const newCycleFormValidationScheme = zod.object({
-  task: zod.string().min(1, 'Informe o nome da tarefa').max(30),
+  task: zod.string().min(1, "Informe o nome da tarefa").max(30),
   minutesAmount: zod.number().min(5).max(60),
 });
 
+// interface NewCycleFormData {
+//   task: string;
+//   minutesAmount: number;
+// }
+
+type NewCycleFormData = zod.infer<typeof newCycleFormValidationScheme>;
+
 export function Home() {
-  const { register, handleSubmit, watch } = useForm({
-    resolver: zodResolver(newCycleFormValidationScheme)
+  const { register, handleSubmit, watch } = useForm<NewCycleFormData>({
+    resolver: zodResolver(newCycleFormValidationScheme),
+    defaultValues: {
+      task: "",
+      minutesAmount: 25,
+    },
   });
 
-  function handleCreateNewCycle(data: any) {
+  function handleCreateNewCycle(data: NewCycleFormData) {
     console.log(data);
   }
 
-  const task = watch('task');
+  const task = watch("task");
   const isSubmitButtonDisabled = !task;
 
   return (
@@ -40,7 +51,7 @@ export function Home() {
             id="task"
             list="task-suggestions"
             placeholder="Dê um nome para o seu estudo"
-            {...register('task')}
+            {...register("task")}
           />
           <datalist id="task-suggestions">
             <option value="Projeto 1" />
@@ -57,7 +68,7 @@ export function Home() {
             step={5}
             min={5}
             max={60}
-            {...register('minutesAmount', {valueAsNumber: true})}
+            {...register("minutesAmount", { valueAsNumber: true })}
           />
           <span>minutos.</span>
         </FormContainer>
@@ -70,7 +81,7 @@ export function Home() {
           <span>0</span>
         </CountdownContainer>
 
-        <StartCountdownButton disabled={isSubmitButtonDisabled} type="submit" >
+        <StartCountdownButton disabled={isSubmitButtonDisabled} type="submit">
           <PlayIcon size={24} />
           Começar
         </StartCountdownButton>
