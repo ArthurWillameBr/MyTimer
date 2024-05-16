@@ -12,6 +12,7 @@ import {
   StartCountdownButton,
   TaskInput,
   MinutesAmountInput,
+  StopCountdownButton,
 } from "./styles";
 import { useEffect, useState } from "react";
 
@@ -27,6 +28,8 @@ interface Cycle {
   task: string;
   minutesAmount: number;
   startDate: Date;
+  interruptedDate?: Date;
+  finishedDate?: Date;
 }
 
 export function Home() {
@@ -41,27 +44,49 @@ export function Home() {
     resolver: zodResolver(newCycleFormValidationScheme),
     defaultValues: {
       task: "",
-      minutesAmount: 25,
+      minutesAmount: 0,
     },
   });
 
   // Encontra o ciclo ativo atual com base no ID do ciclo ativo
   const activeCycle = cycles.find((cycle) => cycle.id === activeCycleId);
 
+  // Calcula o total de segundos para o ciclo ativo, multiplicando a quantidade de minutos do ciclo pelo número de segundos em um minuto (60 segundos)
+  const totalSeconds = activeCycle ? activeCycle.minutesAmount * 60 : 0;
+
   useEffect(() => {
     let interval: number;
 
     if (activeCycle) {
       interval = setInterval(() => {
-        setAmountSecondsPassed(
-          differenceInSeconds(new Date(), activeCycle.startDate)
+        const secondsDifference = differenceInSeconds(
+          new Date(),
+          activeCycle.startDate
         );
+        if (secondsDifference >= totalSeconds) {
+          setCycles((state) =>
+            state.map((cycle) => {
+              if (cycle.id === activeCycleId) {
+                return {
+                  ...cycle,
+                  finishedDate: new Date(),
+                };
+              } else {
+                return cycle;
+              }
+            })
+          );
+          setAmountSecondsPassed(totalSeconds)
+            clearInterval(interval);
+        } else {
+          setAmountSecondsPassed(secondsDifference);
+        }
       }, 1000);
     }
     return () => {
       clearInterval(interval);
     };
-  }, [activeCycle]);
+  }, [activeCycle, totalSeconds, activeCycleId]);
 
   function handleCreateNewCycle(data: NewCycleFormData) {
     const id = String(new Date().getTime());
@@ -80,8 +105,20 @@ export function Home() {
     setActiveCycleId(id);
   }
 
-  // Calcula o total de segundos para o ciclo ativo, multiplicando a quantidade de minutos do ciclo pelo número de segundos em um minuto (60 segundos)
-  const totalSeconds = activeCycle ? activeCycle.minutesAmount * 60 : 0;
+  function handleInterruptCycle() {
+    setCycles((state) =>
+      state.map((cycle) => {
+        if (cycle.id === activeCycleId) {
+          return {
+            ...cycle,
+            interruptedDate: new Date(),
+          };
+        }
+        return cycle;
+      })
+    );
+    setActiveCycleId(null);
+  }
 
   // Calcula o número de segundos restantes no ciclo ativo, subtraindo a quantidade de segundos já decorridos do total de segundos no ciclo
   const currentSeconds = activeCycle ? totalSeconds - amountSecondsPassed : 0;
@@ -113,6 +150,7 @@ export function Home() {
           <TaskInput
             id="task"
             list="task-suggestions"
+            disabled={!!activeCycle}
             placeholder="Dê um nome para o seu estudo"
             {...register("task")}
           />
@@ -131,6 +169,7 @@ export function Home() {
             step={5}
             min={5}
             max={60}
+            disabled={!!activeCycle}
             {...register("minutesAmount", { valueAsNumber: true })}
           />
           <span>minutos.</span>
@@ -145,9 +184,9 @@ export function Home() {
         </CountdownContainer>
 
         {activeCycle ? (
-          <StopCountdownButton type="button">
+          <StopCountdownButton onClick={handleInterruptCycle} type="button">
             <Hand size={24} />
-            Parar
+            Interromper
           </StopCountdownButton>
         ) : (
           <StartCountdownButton disabled={isSubmitButtonDisabled} type="submit">
