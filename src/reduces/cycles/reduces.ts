@@ -1,4 +1,6 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+import { ActionsTypes } from "./actions"; 
+
 interface CyclesState {
     cycles: Cycle[];
     activeCycleId: string | null;
@@ -12,12 +14,6 @@ export interface Cycle {
     interruptedDate?: Date;
     finishedDate?: Date;
   }
-
-export enum ActionsTypes {
-    ADD_NEW_CYCLE = "ADD_NEW_CYCLE",
-    INTERRUPT_CURRENT_CYCLE = "INTERRUPT_CURRENT_CYCLE",
-    MARK_CURRENT_CYCLE_AS_FINISHED = "MARK_CURRENT_CYCLE_AS_FINISHED",
-}
 
 export function cyclesReduces (state: CyclesState, action: any) {
 
