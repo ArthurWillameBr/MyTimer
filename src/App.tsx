@@ -1,15 +1,14 @@
-import { ThemeProvider } from "styled-components";
-import { defaultTheme } from "./styles/themes/default";
 import { GlobalStyle } from "./styles/global";
 import { Router } from "./Router";
 import { CyclesContextProvider } from "./contexts/CyclesContext";
+import { ThemeContextProvider } from "./contexts/themeContext";
 export function App() {
   return (
-    <ThemeProvider theme={defaultTheme}>
-        <CyclesContextProvider>
-            <GlobalStyle />
-            <Router/>
-        </CyclesContextProvider>
-    </ThemeProvider>
+    <ThemeContextProvider>
+      <CyclesContextProvider>
+        <GlobalStyle />
+        <Router />
+      </CyclesContextProvider>
+    </ThemeContextProvider>
   );
 }

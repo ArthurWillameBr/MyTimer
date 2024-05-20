@@ -7,7 +7,6 @@ export const HistoryContainer = styled.main`
   flex-direction: column;
   h1 {
     font-size: 1.5rem;
-    color: ${(props) => props.theme["gray-100"]};
   }
 `;
 
@@ -22,10 +21,10 @@ export const HistoryList = styled.div`
     min-width: 600px;
 
     th {
-      background: ${(props) => props.theme["gray-600"]};
+      background: ${(props) => props.theme["th"]};
       padding: 1rem;
       text-align: left;
-      color: ${(props) => props.theme["gray-100"]};
+      color: ${(props) => props.theme["foreground"]};
       font-size: 0.875rem;
       line-height: 1.6;
 
@@ -39,8 +38,8 @@ export const HistoryList = styled.div`
       }
     }
     td {
-      background-color: ${(props) => props.theme["gray-700"]};
-      border-top: 4px solid ${(props) => props.theme["gray-800"]};
+      background-color: ${(props) => props.theme["td"]};
+      border-top: 4px solid ${(props) => props.theme["background"]};
       padding: 1rem;
       font-size: 0.875rem;
       line-height: 1.6;
@@ -57,9 +56,9 @@ export const HistoryList = styled.div`
 `;
 
 const STATUS_COLORS = {
-    green: 'green-500',
-    yellow: 'yellow-500',
-    red: 'red-500',
+    green: 'green',
+    yellow: 'yellow',
+    red: 'red',
 } as const;
 
 interface StatusProps {

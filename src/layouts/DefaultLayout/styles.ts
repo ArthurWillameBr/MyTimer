@@ -9,5 +9,5 @@ export const LayoutContainer = styled.div`
   display: flex;
   flex-direction: column;
 
-  background: ${props => props.theme['gray-800']};
+  background: ${props => props.theme['secondary']};
 `;

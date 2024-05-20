@@ -1,21 +1,33 @@
-export const defaultTheme = {
-    white: '#FFF',
+export const lightTheme = {
+  'background': '#F7F7F7',
+  'foreground': '#1A1821',  
+       
+  'countdown': '#e4e4e7',
 
-  'gray-100': '#E1E1E6',
-  'gray-300': '#C4C4CC',
-  'gray-400': '#8D8D99',
-  'gray-500': '#7C7C8A',
-  'gray-600': '#323238',
-  'gray-700': '#29292E',
-  'gray-800': '#202024',
-  'gray-900': '#121214',
+  'primary': '#7c3aed',     
+  'primary-foreground': '#FFF',  
+  'secondary': '#d4d4d4',  
+ 'yellow': '#eab308',
+  'red': '#dc2626',
+  'red-foreground': '#EAE6F7',
+  'green': '#22c55e',
+  'td': '#e5e5e5',
+  'th':   '#a3a3a3' 
+  
+} as const
 
-  'green-300': '#00B37E',
-  'green-500': '#00875F',
-  'green-700': '#015F43',
-
-  'red-500': '#AB222E',
-  'red-700': '#7A1921',
-
-  'yellow-500': '#FBA94C',
-}
+export const darkTheme = {
+  'countdown': '#29292E',
+  'background': '#0D0D0D',
+  'foreground':' #ffffff',
+  'yellow': '#eab308',
+  'primary': '#7c3aed',     
+  'primary-foreground': '#FFF',  
+  'secondary': '#202024',  
+  'secondary-foreground': '#FFF',  
+  'red': '#dc2626',  
+  'red-foreground': '#EAE6F7',
+  'green': '#22c55e', 
+  'td': '#29292E', 
+  'th': '#323238' 
+} as const

@@ -19,17 +19,22 @@ export const HeaderContainer = styled.header`
     align-items: center;
     border-top: 3px solid transparent;
     border-bottom: 3px solid transparent;
-    color: ${(props) => props.theme["gray-100"]};
+    color: ${(props) => props.theme["foreground"]};
 
     &:hover {
-        border-bottom: 3px solid ${(props) => props.theme["green-500"]};
+        border-bottom: 3px solid ${(props) => props.theme["primary"]};
     }
 
 
     &.active {
-        color: ${(props) => props.theme["green-500"]};
+        color: ${(props) => props.theme["primary"]};
     }
-  }
-    
-  
+  } 
 `;
+
+export const ButtonIcon = styled.button`
+      background: none;
+      border: none;
+      cursor: pointer;
+      color: ${props => props.theme["foreground"]};
+`
