@@ -16,14 +16,14 @@ interface ThemeContextType {
 export const ThemeContext = createContext({} as ThemeContextType)
 
 export function ThemeContextProvider({children}: ThemeContextProviderProps) {
-    const [theme, setTheme] = useState('light')
+    const [theme, setTheme] = useState('dark')
 
     const toggleTheme = () => {
-        theme === 'light' ? setTheme('dark') : setTheme('light')
+        theme === 'dark' ? setTheme('light') : setTheme('dark')
     }
     return (
         <ThemeContext.Provider value={{theme, toggleTheme}}>
-            <ThemeProvider theme={theme === 'light' ? lightTheme : darkTheme}>
+            <ThemeProvider theme={theme === 'dark' ? darkTheme : lightTheme}>
                 <GlobalStyle />
                 {children}
             </ThemeProvider>

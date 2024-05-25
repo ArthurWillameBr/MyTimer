@@ -1,9 +1,7 @@
 export const lightTheme = {
   'background': '#F7F7F7',
   'foreground': '#1A1821',  
-       
   'countdown': '#e4e4e7',
-
   'primary': '#7c3aed',     
   'primary-foreground': '#FFF',  
   'secondary': '#d4d4d4',  
