@@ -10,7 +10,6 @@ export function Header() {
 
   return (
     <HeaderContainer>
-      <span>Logo</span>
       <nav>
         <NavLink to="/" title="Home">
           <TimerIcon size={32} />
